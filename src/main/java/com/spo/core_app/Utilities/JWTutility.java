@@ -1,11 +1,11 @@
-package com.spo.core_app.utilities;
+package com.spo.core_app.Utilities;
 
 import com.spo.core_app.Constants.SystemConstants;
 import com.spo.core_app.Service.EmployeeService;
-import com.spo.core_app.constants.SystemConstant;
+
 import com.spo.core_app.models.Employee;
-import com.spo.core_app.models.Role;
 import com.spo.core_app.models.Roles;
+
 import com.spo.core_app.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

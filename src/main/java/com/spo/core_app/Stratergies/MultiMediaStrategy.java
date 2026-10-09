@@ -13,6 +13,7 @@ public class MultiMediaStrategy {
     private AwsService awsservice;
     private AzureService azureservice;
     private ImageKitService imagekitservice;
+    @Autowired
     public MultiMediaStrategy(AwsService awsservice,AzureService azureservice,ImageKitService imagekitservice){
         this.awsservice=awsservice;
         this.azureservice=azureservice;

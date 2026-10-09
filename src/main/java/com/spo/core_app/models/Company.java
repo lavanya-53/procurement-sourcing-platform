@@ -4,6 +4,7 @@ import com.spo.core_app.Enums.CompanyStatus;
 import com.spo.core_app.Enums.CompanyType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
@@ -16,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@Data
 public class Company extends globalrecord{
       private String CompanyId;
       private String LegalName;

@@ -1,13 +1,22 @@
 package com.spo.core_app.Configurations;
 
 import io.imagekit.sdk.ImageKit;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.client.RestTemplate;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+
+import java.util.Properties;
+
 //This class contains application configuration.
 @Configuration
 public class SystemConfigurations {
-     @Value("${imageKit.public.key}")
+     @Value("${imageKit.Public.key}")
      private String ImageKitpublickey;
      @Value("${imageKit.private.key}")
     private String ImageKitprivatekey;
@@ -18,6 +27,10 @@ public class SystemConfigurations {
      //Java Variables
      @Value("${imageKit.endpoint}")
     private String Imagekitendpoint;
+    @Value("${spring.mail.username}")
+    private String apiEmailAddress;
+    @Value("${spring.mail.password}")
+    private String apiEmailPassword;
      //just an helper method was not supposed to be injected anywhere
    public io.imagekit.sdk.config.Configuration CreateConnectionConfiguration(){
        return new io.imagekit.sdk.config.Configuration(
@@ -39,6 +52,36 @@ public class SystemConfigurations {
        imagekit.setConfig(config);
        return imagekit;
        //spring recieves it and stores it has bean
+   }
+   @Bean
+   //javamailsender->connect to gmail->user recieves mail
+   public JavaMailSender CreateJavaMailSender(){
+       JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+       Properties mailProperties = new Properties();
+       mailProperties.put("mail.smtp.auth", true);
+       mailProperties.put("mail.smtp.starttls.enable", true);
+       javaMailSender.setJavaMailProperties(mailProperties);
+       javaMailSender.setHost("smtp.gmail.com");
+       javaMailSender.setPort(587);
+       javaMailSender.setUsername(apiEmailAddress);
+       javaMailSender.setPassword(apiEmailPassword);
+       return  javaMailSender;
+   }
+   @Bean
+   //it is used to fill the values of those placeholders
+    public TemplateEngine CreateTemplateEngine(){
+       ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+       templateResolver.setPrefix("templates/"); // Make sure this folder exists in resources
+       templateResolver.setSuffix(".html");
+       templateResolver.setTemplateMode("HTML");
+       templateResolver.setCharacterEncoding("UTF-8");
+       TemplateEngine templateEngine = new TemplateEngine();
+       templateEngine.setTemplateResolver(templateResolver);
+       return templateEngine;
+   }
+   @Bean
+    public RestTemplate CreateRestTemplate(){
+       return new RestTemplate();
    }
 
 }

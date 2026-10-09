@@ -1,10 +1,11 @@
-package com.spo.core_app.jobs;
+package com.spo.core_app.Jobs;
 
 
 
 import com.spo.core_app.Constants.SystemConstants;
 import com.spo.core_app.Repository.OperationRepository;
 import com.spo.core_app.Utilities.SystemUtilities;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -76,13 +77,38 @@ public class SystemJobs {
                Operation.builder().id("OPR-76").operationName("SUPPLIER_PORTAL_ACCESS").operationCategory("SUPPLIER_MANAGEMENT").build(),
                Operation.builder().id("OPR-77").operationName("PROCUREMENT_AUTOMATION_RPA").operationCategory("TECHNOLOGY").build(),
                Operation.builder().id("OPR-78").operationName("REPORT_VIEW").operationCategory("ANALYTICS").build(),
-               Operation.builder().id("OPR-79").operationName("INVITE_USER").operationCategory("SYSTEM").build()
+               Operation.builder().id("OPR-79").operationName("CREATE_ROLE").operationCategory("SYSTEM").build(),
+               Operation.builder().id("OPR-80").operationName("INVITE_USER").operationCategory("SYSTEM").build(),
+               Operation.builder().id("OPR-81").operationName("VIEW_PURCHASE_ORDERS").operationCategory("SUPPLIER").build(),
+
+               Operation.builder().id("OPR-82").operationName("SUBMIT_QUOTATION").operationCategory("SUPPLIER").build(),
+
+               Operation.builder().id("OPR-83").operationName("UPLOAD_INVOICE").operationCategory("SUPPLIER").build(),
+
+               Operation.builder().id("OPR-84").operationName("UPDATE_SUPPLIER_PROFILE").operationCategory("SUPPLIER").build(),
+
+               Operation.builder().id("OPR-85").operationName("INVITE_SUPPLIER_EMPLOYEE").operationCategory("SUPPLIER").build(),
+
+               Operation.builder().id("OPR-86").operationName("VIEW_COMPANY_PROFILE").operationCategory("SUPPLIER").build(),
+               Operation.builder().id("OPR-87").operationName("VIEW_SUPPLIERS").operationCategory("PROCUREMENT").build(),
+               Operation.builder()
+                       .id("OPR-88")
+                       .operationName("APPROVE_COMPANY")
+                       .operationCategory("SYSTEM")
+                       .build(),
+
+               Operation.builder()
+                       .id("OPR-89")
+                       .operationName("REJECT_COMPANY")
+                       .operationCategory("SYSTEM")
+                       .build()
+
        );
    }
 
 
 
-    @Scheduled(fixedRate=1000)
+    @PostConstruct
     public void loadAllOperations(){
            List<Operation>operations=this.getAllSystemOperations();
            for(Operation op:operations){

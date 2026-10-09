@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 public class Attachment extends globalrecord{
     private String AttachmentID;
     private String AttachmentUrl;
-    @Enumerated
+
     //this keyword says this field is java enum
     private String attachmentType;
     private String AttachmentDesc;

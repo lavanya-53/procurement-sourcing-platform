@@ -6,16 +6,18 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name="users")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-
+@SuperBuilder
 public class User extends globalrecord {
     private String userId;
 
@@ -29,7 +31,7 @@ public class User extends globalrecord {
     @Column(unique = true, nullable = false)
     private String email;
 
-    private String password;
+
 
     private String phoneNumber;
 
@@ -53,8 +55,10 @@ public class User extends globalrecord {
     private LocalDateTime lastLoginDate;
 
     private Boolean emailVerified;
+    @ManyToMany
+    private List<Roles> role;
 
     private Boolean mfaEnabled;
 }
 
-}
+

@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
                     .LegalName(dto.getLegalName())
                     .DisplayName(dto.getDisplayName())
                     .companyType(dto.getCompanyType())
+                    .companyStatus(CompanyStatus.PENDING)
                     .taxId(dto.getTaxId())
                     .taxRegno(dto.getTaxRegNumber())
                     .govtRegNo(dto.getGovtRegNumber())
