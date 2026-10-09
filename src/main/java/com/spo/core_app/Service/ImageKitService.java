@@ -37,7 +37,7 @@ public class ImageKitService implements MultiMediaService{
                 filecreaterequest.setFolder(path);
                 Result imagekitresult=Imagekit.upload(filecreaterequest);
                 //Call the getName() method of the Result object.
-                result=FileUploadResult.builder().FileName(imagekitresult.getName()).fileId(imagekitresult.getFileId()).FileType(imagekitresult.getFileType()).FileSize(imagekitresult.getSize()).Filelink(imagekitresult.getFilePath()).build();
+                result=FileUploadResult.builder().FileName(imagekitresult.getName()).fileId(imagekitresult.getFileId()).FileType(imagekitresult.getFileType()).FileSize(imagekitresult.getSize()).Filelink(imagekitresult.getUrl()).build();
                 return result;
             } catch (Exception e) {
                 log.error(String.format("The error occured due to following resosn:%s", e.getMessage()));

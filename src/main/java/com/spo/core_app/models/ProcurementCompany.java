@@ -1,13 +1,23 @@
 package com.spo.core_app.models;
 
 import com.spo.core_app.Enums.Currency;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @SuperBuilder
+@Data
+@Entity
+@Table(name="ProcurementCompany")
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProcurementCompany extends Company{
     private String ProcurementCompanyId;
     // Procurement Organization Details

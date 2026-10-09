@@ -7,12 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
 @Slf4j
+@Async
 public class NotificationService {
     private TemplateEngine templateengine;
     private JavaMailSender javamailsender;
@@ -54,6 +56,8 @@ public class NotificationService {
             MimeMessage mimemessage=javamailsender.createMimeMessage();
             MimeMessageHelper mimemessagehelper=new MimeMessageHelper(mimemessage);
             mimemessagehelper.setTo(ToEmail);
+            //This tells the mail server where to send the email.
+            //This puts the entire processed HTML into the email body.
             mimemessagehelper.setText(HtmlEmail,true);
             mimemessagehelper.setSubject(EmailConstants.procurement_Company_email_Subject_Line);
             javamailsender.send(mimemessage);
@@ -62,5 +66,51 @@ public class NotificationService {
             log.error(e.getMessage());
         }
 
+    }
+    public void SendSupplierRegistrationNotification(
+            String toEmail,
+            String password,
+            String username,
+            String supplierCompany,
+            String supplierCode) {
+
+        Context context = new Context();
+
+        context.setVariable("supplierAdminName", username);
+
+        context.setVariable("supplierCompany", supplierCompany);
+
+        context.setVariable("supplierCode", supplierCode);
+
+        context.setVariable("email", toEmail);
+
+        context.setVariable("password", password);
+
+        String htmlEmail =
+                templateengine.process(
+                        EmailConstants.Supplier_Registration_Email_Template_Name,
+                        context);
+
+        try {
+
+            MimeMessage mimeMessage =
+                    javamailsender.createMimeMessage();
+
+            MimeMessageHelper mimeMessageHelper =
+                    new MimeMessageHelper(mimeMessage);
+
+            mimeMessageHelper.setTo(toEmail);
+
+            mimeMessageHelper.setSubject(
+                    EmailConstants.supplier_Registration_Email_Subject_Line);
+
+            mimeMessageHelper.setText(htmlEmail, true);
+
+            javamailsender.send(mimeMessage);
+
+        } catch (Exception e) {
+
+            log.error(e.getMessage());
+        }
     }
 }

@@ -1,10 +1,11 @@
 package com.spo.core_app.Enums;
 
 public enum CompanyStatus {
-    Accepted,
     Rejected,
     Approved,
-    Pushblished,
+    Pusblished,
     IN_review,
-    Document_asked
+    Document_asked,
+    ACTIVE,
+    PENDING
 }
